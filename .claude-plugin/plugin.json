@@ -1,0 +1,9 @@
+{
+  "name": "smart-brief",
+  "description": "Blocks the Artifact tool and writes decision briefs as self-contained, version-controlled HTML files instead.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Watson Tsai"
+  },
+  "license": "MIT"
+}

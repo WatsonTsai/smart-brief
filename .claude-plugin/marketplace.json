@@ -1,0 +1,25 @@
+{
+  "name": "smart-brief",
+  "description": "One plugin that swaps hosted Claude Code artifacts for local, version-controlled HTML briefs.",
+  "owner": {
+    "name": "Watson Tsai"
+  },
+  "plugins": [
+    {
+      "name": "smart-brief",
+      "source": "./",
+      "description": "Blocks the Artifact tool and writes decision briefs as self-contained, version-controlled HTML files instead.",
+      "category": "documentation",
+      "tags": [
+        "artifacts",
+        "html",
+        "reports",
+        "hooks",
+        "pretooluse"
+      ],
+      "skills": [
+        "./skills/make-brief"
+      ]
+    }
+  ]
+}

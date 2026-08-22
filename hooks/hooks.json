@@ -1,0 +1,20 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Artifact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/hooks/block-artifact.py"
+            ],
+            "timeout": 15,
+            "statusMessage": "Blocking Artifact - use make-brief + local HTML instead..."
+          }
+        ]
+      }
+    ]
+  }
+}

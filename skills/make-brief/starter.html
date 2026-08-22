@@ -1,0 +1,419 @@
+<!doctype html>
+<!--
+  make-brief starter — copy the whole file and rewrite it; do not re-derive the CSS.
+  Write the file with a UTF-8-aware tool (Python with encoding="utf-8", or the Write tool).
+  The localStorage key (THEME_KEY, below) must be a unique string per document.
+
+  Everything inside [square brackets] is a placeholder you must replace — including the ones that
+  already read as finished English ([Summary], [done], [My recommendation:]). Those are default
+  wording, not fixed furniture: when the page is written in another language, they get translated
+  along with the body text. Grep the finished file for "[" and you should find nothing left.
+-->
+<!-- lang= must name the language this page is actually written in, not the language of this
+     starter: "zh-Hant" for Traditional Chinese, "ja" for Japanese, and so on. Screen readers pick
+     the pronunciation from it, and browsers pick line-breaking and font matching from it. "en"
+     below is only a working default. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[REPLACE ME] Topic — one-line description</title>
+<style>
+  /* ---------- reset ---------- */
+  *, *::before, *::after { box-sizing: border-box; }
+  * { margin: 0; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body { min-height: 100vh; }
+  img { display: block; max-width: 100%; }
+  h1, h2, h3, h4, p, li { overflow-wrap: break-word; }
+  ul, ol { padding: 0; list-style: none; }
+  table { border-collapse: collapse; }
+
+  /* ---------- tokens (light is the default) ---------- */
+  :root {
+    --ground: #eef1f4; --surface: #ffffff; --surface-2: #f5f8fa;
+    --line: #d6dee5; --line-strong: #b6c2cd;
+    --ink: #151b22; --ink-2: #3c4a58; --muted: #6a7885;
+    --accent: #9d5511; --accent-soft: #f6ebdd;
+    --danger: #9e2028; --danger-soft: #f9e6e7;
+    --warn: #7f5a00;   --warn-soft: #faf1d9;
+    --ok: #1b6455;     --ok-soft: #e1f0ec;
+    --flow: #2b6cb0;   --flow-soft: #dbeafe;   /* diagrams: incoming / flow */
+    --shadow: 0 1px 2px rgba(20,30,40,.06), 0 8px 24px -12px rgba(20,30,40,.18);
+    /* The CJK entries are fallbacks: font matching is per character, so Latin text still uses the
+       faces listed before them, and only CJK characters fall through. One face per platform —
+       "PingFang TC" (macOS), "Microsoft JhengHei" (Windows), "Noto Sans CJK TC" / "Noto Sans TC"
+       (Linux, web) — so the same document looks the same everywhere. Drop them only if you are
+       certain no CJK will ever appear, including in a quotation.
+       --mono needs them too: the Latin monospace faces carry no CJK glyphs, so without a fallback
+       every CJK character in an eyebrow, a table header, a chip, or an SVG label is resolved by the
+       browser's last-resort font and stops matching the body text. */
+    --sans: "Segoe UI Variable Text", "Segoe UI", system-ui, "PingFang TC", "Microsoft JhengHei", "Noto Sans CJK TC", "Noto Sans TC", sans-serif;
+    --display: "Segoe UI Variable Display", "Segoe UI Semibold", "Segoe UI", system-ui, "PingFang TC", "Microsoft JhengHei", "Noto Sans CJK TC", "Noto Sans TC", sans-serif;
+    --mono: ui-monospace, "Cascadia Mono", Consolas, "PingFang TC", "Microsoft JhengHei", "Noto Sans CJK TC", "Noto Sans TC", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #0e1318; --surface: #161d24; --surface-2: #1b232c;
+      --line: #29333d; --line-strong: #3b4753;
+      --ink: #e7edf3; --ink-2: #b7c3ce; --muted: #8290a0;
+      --accent: #e39a3e; --accent-soft: #2c2317;
+      --danger: #ef7070; --danger-soft: #2c1a1c;
+      --warn: #ddb04f;   --warn-soft: #292113;
+      --ok: #57c4a7;     --ok-soft: #13251f;
+      --flow: #6aa9e9;   --flow-soft: #17293d;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0e1318; --surface: #161d24; --surface-2: #1b232c;
+    --line: #29333d; --line-strong: #3b4753;
+    --ink: #e7edf3; --ink-2: #b7c3ce; --muted: #8290a0;
+    --accent: #e39a3e; --accent-soft: #2c2317;
+    --danger: #ef7070; --danger-soft: #2c1a1c;
+    --warn: #ddb04f;   --warn-soft: #292113;
+    --ok: #57c4a7;     --ok-soft: #13251f;
+    --flow: #6aa9e9;   --flow-soft: #17293d;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+  }
+  :root[data-theme="light"] {
+    --ground: #eef1f4; --surface: #ffffff; --surface-2: #f5f8fa;
+    --line: #d6dee5; --line-strong: #b6c2cd;
+    --ink: #151b22; --ink-2: #3c4a58; --muted: #6a7885;
+    --accent: #9d5511; --accent-soft: #f6ebdd;
+    --danger: #9e2028; --danger-soft: #f9e6e7;
+    --warn: #7f5a00;   --warn-soft: #faf1d9;
+    --ok: #1b6455;     --ok-soft: #e1f0ec;
+    --flow: #2b6cb0;   --flow-soft: #dbeafe;
+    --shadow: 0 1px 2px rgba(20,30,40,.06), 0 8px 24px -12px rgba(20,30,40,.18);
+  }
+
+  /* ---------- base ---------- */
+  body { background: var(--ground); color: var(--ink); font-family: var(--sans);
+         font-size: 16.5px; line-height: 1.72; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px 100px; }
+
+  header.mast { background: var(--surface); border-bottom: 1px solid var(--line); padding: 40px 0 28px; }
+  header.mast .wrap { padding-bottom: 0; }
+  .eyebrow { font-family: var(--mono); font-size: 11.5px; letter-spacing: .14em;
+             text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  h1 { font-family: var(--display); font-size: clamp(27px, 4vw, 38px); line-height: 1.16;
+       font-weight: 700; letter-spacing: -0.02em; margin-bottom: 14px; max-width: 24ch; }
+  .standfirst { color: var(--ink-2); font-size: 17px; max-width: 68ch; }
+
+  nav.toc { position: sticky; top: 0; z-index: 20;
+            background: color-mix(in srgb, var(--ground) 90%, transparent);
+            backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); margin-bottom: 40px; }
+  nav.toc ul { max-width: 1180px; margin: 0 auto; padding: 10px 24px; display: flex; gap: 4px; overflow-x: auto; }
+  nav.toc a { font-family: var(--mono); font-size: 11.5px; color: var(--muted); text-decoration: none;
+              padding: 5px 10px; border-radius: 3px; white-space: nowrap; display: block; }
+  nav.toc a:hover, nav.toc a:focus-visible { color: var(--ink); background: var(--surface-2); }
+
+  section { margin-bottom: 72px; scroll-margin-top: 60px; }
+  .sec-head { border-top: 2px solid var(--ink); padding-top: 14px; margin-bottom: 6px;
+              display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .sec-num { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: .08em; }
+  h2 { font-family: var(--display); font-size: clamp(21px, 2.6vw, 28px); font-weight: 700;
+       letter-spacing: -0.018em; line-height: 1.25; }
+  .sec-goal { color: var(--muted); font-size: 15px; font-style: italic; margin: 10px 0 26px; max-width: 70ch; }
+  h3 { font-family: var(--display); font-size: 18.5px; font-weight: 650; margin: 32px 0 11px; letter-spacing: -0.012em; }
+  h4 { font-family: var(--display); font-size: 15.5px; font-weight: 650; margin-bottom: 6px; }
+  p { margin-bottom: 15px; max-width: 70ch; }
+  p:last-child { margin-bottom: 0; }
+  ul.body { list-style: disc; padding-left: 23px; margin-bottom: 15px; max-width: 70ch; }
+  ul.body li { margin-bottom: 8px; }
+  a { color: var(--accent); }
+  strong { font-weight: 650; }
+  code { font-family: var(--mono); font-size: .875em; background: var(--surface-2);
+         border: 1px solid var(--line); border-radius: 3px; padding: 1px 5px; word-break: break-word; }
+  .term { border-bottom: 1.5px dotted var(--accent); font-weight: 600; }   /* first appearance of a term */
+
+  /* ---------- key box / callout / quote ---------- */
+  .key { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+         border-radius: 4px; padding: 20px 24px; margin: 22px 0; box-shadow: var(--shadow); }
+  .key .kt { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase;
+             color: var(--accent); font-weight: 700; margin-bottom: 8px; }
+  .key p { max-width: none; }
+  .key.ok { border-left-color: var(--ok); }        .key.ok .kt { color: var(--ok); }
+  .key.warn { border-left-color: var(--warn); }    .key.warn .kt { color: var(--warn); }
+  .key.danger { border-left-color: var(--danger); }.key.danger .kt { color: var(--danger); }
+
+  .callout { background: var(--surface-2); border: 1px solid var(--line); border-radius: 4px;
+             padding: 17px 19px; font-size: 15px; color: var(--ink-2); margin: 18px 0; }
+  .callout b { color: var(--ink); }
+  .callout p { max-width: none; }
+  .callout.ok { background: var(--ok-soft); border-color: color-mix(in srgb, var(--ok) 35%, var(--line)); }
+  .callout.warn { background: var(--warn-soft); border-color: color-mix(in srgb, var(--warn) 35%, var(--line)); }
+  .callout.danger { background: var(--danger-soft); border-color: color-mix(in srgb, var(--danger) 35%, var(--line)); }
+
+  .quote { border-left: 3px solid var(--line-strong); padding: 4px 0 4px 20px; margin: 20px 0;
+           color: var(--ink-2); font-size: 16.5px; max-width: 66ch; }
+  .quote cite { display: block; font-size: 13.5px; color: var(--muted); font-style: normal;
+                font-family: var(--mono); margin-top: 8px; }
+
+  /* ---------- tables ---------- */
+  .tw { overflow-x: auto; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); margin: 18px 0; }
+  table { width: 100%; font-size: 14.5px; }
+  th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+  thead th { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
+             color: var(--muted); font-weight: 600; background: var(--surface-2); white-space: nowrap; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: var(--surface-2); }
+  td.num, th.num { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.hi { background: color-mix(in srgb, var(--accent-soft) 55%, transparent); }
+  .was { text-decoration: line-through; color: var(--muted); }   /* superseded value */
+
+  .chip { display: inline-flex; align-items: center; font-family: var(--mono); font-size: 10.5px;
+          letter-spacing: .08em; text-transform: uppercase; font-weight: 600; padding: 3px 8px;
+          border-radius: 3px; white-space: nowrap; }
+  .chip.ok { background: var(--ok-soft); color: var(--ok); }
+  .chip.warn { background: var(--warn-soft); color: var(--warn); }
+  .chip.stop { background: var(--danger-soft); color: var(--danger); }
+  .chip.idle { background: var(--surface-2); color: var(--muted); }
+
+  /* ---------- figures ---------- */
+  figure.dia { margin: 26px 0; background: var(--surface); border: 1px solid var(--line);
+               border-radius: 4px; padding: 22px; box-shadow: var(--shadow); }
+  figure.dia svg { width: 100%; height: auto; display: block; }
+  figure.dia figcaption { font-size: 14px; color: var(--muted); margin-top: 14px;
+                          padding-top: 12px; border-top: 1px solid var(--line); }
+  .svg-title   { font-family: var(--display); font-size: 13px; font-weight: 700; fill: var(--ink); }
+  .svg-label   { font-family: var(--mono); font-size: 11px; fill: var(--ink-2); }
+  .svg-label-s { font-family: var(--mono); font-size: 9.5px; fill: var(--muted); }
+
+  figure.photo { margin: 0; background: var(--surface); border: 1px solid var(--line);
+                 border-radius: 4px; padding: 12px; box-shadow: var(--shadow); }
+  figure.photo img { width: 100%; height: auto; border-radius: 2px; background: #fff; }
+  figure.photo figcaption { font-size: 12.5px; color: var(--muted); margin-top: 8px; font-family: var(--mono); }
+
+  /* ---------- item-by-item review cards ---------- */
+  .cand { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--line-strong);
+          border-radius: 4px; padding: 22px 24px; margin-bottom: 26px; box-shadow: var(--shadow); }
+  .cand.best { border-left-color: var(--ok); }
+  .cand.good { border-left-color: var(--accent); }
+  .cand.caution { border-left-color: var(--warn); }
+  .cand-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+  .cand-id { font-family: var(--display); font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
+  .cand-rank { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+               font-weight: 700; padding: 3px 9px; border-radius: 3px; }
+  .cand.best .cand-rank { background: var(--ok-soft); color: var(--ok); }
+  .cand.good .cand-rank { background: var(--accent-soft); color: var(--accent); }
+  .cand.caution .cand-rank { background: var(--warn-soft); color: var(--warn); }
+  .cand-sub { color: var(--muted); font-size: 14px; font-family: var(--mono); }
+  .cand-grid { display: grid; grid-template-columns: 250px 1fr; gap: 16px; margin: 16px 0; align-items: start; }
+  @media (max-width: 820px) { .cand-grid { grid-template-columns: 1fr; } }
+
+  .metrics { display: flex; flex-wrap: wrap; gap: 1px; background: var(--line);
+             border: 1px solid var(--line); border-radius: 3px; overflow: hidden; margin: 14px 0; }
+  .metrics > div { background: var(--surface-2); padding: 10px 14px; flex: 1 1 110px; }
+  .metrics .k { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+                color: var(--muted); display: block; margin-bottom: 3px; }
+  .metrics .v { font-family: var(--display); font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .metrics .v.good { color: var(--ok); }
+  .metrics .v.bad { color: var(--danger); }
+
+  .verdict { background: var(--surface-2); border: 1px solid var(--line); border-radius: 3px;
+             padding: 14px 16px; font-size: 14.5px; color: var(--ink-2); }
+  .verdict b { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
+               color: var(--accent); display: block; margin-bottom: 5px; }
+  .verdict p { max-width: none; }
+  .checkq { margin-top: 12px; padding: 13px 16px; border: 1px dashed color-mix(in srgb, var(--accent) 50%, var(--line));
+            border-radius: 3px; font-size: 14.5px; background: color-mix(in srgb, var(--accent-soft) 45%, transparent); }
+  .checkq b { color: var(--accent); font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em;
+              text-transform: uppercase; display: block; margin-bottom: 5px; }
+  .checkq p { max-width: none; margin-bottom: 0; }
+
+  /* ---------- decision items ---------- */
+  .decide { background: var(--surface); border: 1px solid color-mix(in srgb, var(--accent) 32%, var(--line));
+            border-radius: 4px; padding: 21px 23px; margin-bottom: 16px; box-shadow: var(--shadow); }
+  .decide .dn { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+                color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+  .decide h4 { font-size: 17.5px; margin-bottom: 9px; }
+  .decide p { font-size: 15.5px; color: var(--ink-2); max-width: none; }
+  .decide .rec { margin-top: 13px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 15px; }
+  .decide .rec b { color: var(--accent); }
+
+  /* ---------- process chain ---------- */
+  .chain { margin: 24px 0; }
+  .stage { display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: center;
+           background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 16px 18px; }
+  .stage.flag { border-color: color-mix(in srgb, var(--danger) 45%, var(--line));
+                background: color-mix(in srgb, var(--danger-soft) 50%, var(--surface)); }
+  .stage.cleared { border-color: color-mix(in srgb, var(--ok) 45%, var(--line));
+                   background: color-mix(in srgb, var(--ok-soft) 42%, var(--surface)); }
+  .stage-label { font-family: var(--mono); font-size: 11px; letter-spacing: .1em;
+                 text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+  .stage-formula { font-family: var(--mono); font-size: 15px; font-weight: 600; color: var(--ink); }
+  .stage-note { font-size: 14px; color: var(--ink-2); margin-top: 6px; max-width: 62ch; }
+  .stage-mag { text-align: right; min-width: 92px; }
+  .stage-mag .n { font-family: var(--display); font-size: 19px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .stage-mag .u { font-family: var(--mono); font-size: 10px; color: var(--muted);
+                  letter-spacing: .08em; text-transform: uppercase; display: block; }
+  .arrow { text-align: center; color: var(--line-strong); font-size: 17px; padding: 5px 0; }
+
+  /* ---------- agenda (auto-numbered) ---------- */
+  .agenda { counter-reset: ag; }
+  .agenda .item { display: grid; grid-template-columns: 34px 1fr; gap: 14px; padding: 14px 0;
+                  border-bottom: 1px solid var(--line); }
+  .agenda .item:last-child { border-bottom: none; }
+  .agenda .item::before { counter-increment: ag; content: counter(ag);
+                          font-family: var(--display); font-size: 20px; font-weight: 700;
+                          color: var(--accent); line-height: 1.2; }
+  .agenda .t { font-weight: 650; font-size: 16.5px; margin-bottom: 3px; }
+  .agenda .d { font-size: 14.5px; color: var(--ink-2); }
+
+  footer { border-top: 1px solid var(--line); margin-top: 60px; padding-top: 20px;
+           color: var(--muted); font-size: 13px; font-family: var(--mono); }
+
+  #themeToggle { position: fixed; right: 18px; bottom: 18px; z-index: 50;
+    background: var(--surface); color: var(--ink); border: 1px solid var(--line-strong);
+    border-radius: 999px; padding: 9px 16px; cursor: pointer; box-shadow: var(--shadow);
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; }
+  #themeToggle:hover { border-color: var(--accent); color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  @media print { #themeToggle, nav.toc { display: none; } }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <div class="eyebrow">[TOPIC] · [OCCASION] · 2026-XX-XX</div>
+    <h1>[A claim in one sentence, not the name of the topic]</h1>
+    <p class="standfirst">
+      [How to read this page: sections 1–N are context, section M is where things stand, the last section is what you have to decide.
+      You can read it top to bottom; no other file is required first.]
+      [If part of it was split off: technical detail lives on its own page → <a href="other_page.html">other_page.html</a>]
+    </p>
+  </div>
+</header>
+
+<nav class="toc">
+  <ul>
+    <li><a href="#tldr">[Summary]</a></li>
+    <li><a href="#s1">01 [plain short label]</a></li>
+    <li><a href="#s2">02 [plain short label]</a></li>
+    <li><a href="#decide">09 [Your decisions]</a></li>
+  </ul>
+</nav>
+
+<div class="wrap">
+
+  <section id="tldr">
+    <div class="key">
+      <div class="kt">[One-minute version]</div>
+      <p>[Motivation: why this thing exists at all]</p>
+      <p>[Method: so here is what we did]</p>
+      <p>[Result + what we need from you now]</p>
+    </div>
+  </section>
+
+  <section id="s1">
+    <div class="sec-head"><span class="sec-num">01</span><h2>[Heading as an assertion, not a noun]</h2></div>
+    <p class="sec-goal">[This section explains:] [one sentence].</p>
+
+    <p>[Body text. The first time a term appears, mark it with] <span class="term">[term]</span> [and explain it in plain words right there.]</p>
+
+    <div class="callout danger"><b>[Here is the problem]</b>: [state the conflict or the risk plainly]</div>
+
+    <figure class="dia">
+      <svg viewBox="0 0 720 240" role="img" aria-label="[one sentence saying what this figure compares]">
+        <!-- see svg_patterns.md; every fill/stroke must use var(--...) -->
+      </svg>
+      <figcaption>
+        [Describe it, then answer "so what"] <strong>[the sentence you want the reader to take away]</strong>
+      </figcaption>
+    </figure>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>[Column]</th><th class="num">[Number]</th><th>[Status]</th></tr></thead>
+        <tbody>
+          <tr class="hi"><td>A</td><td class="num">1.23</td><td><span class="chip ok">[done]</span></td></tr>
+          <tr><td>B</td><td class="num"><span class="was">[old value]</span> [new value]</td><td><span class="chip warn">[in progress]</span></td></tr>
+          <tr><td>C</td><td class="num">—</td><td><span class="chip idle">[not started]</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="quote">
+      "[Quote the actual words; do not paraphrase]"
+      <cite>— [source]</cite>
+    </div>
+  </section>
+
+  <section id="s2">
+    <div class="sec-head"><span class="sec-num">02</span><h2>[Item-by-item review, demo]</h2></div>
+    <p class="sec-goal">[This section explains:] [one sentence].</p>
+
+    <div class="cand best">
+      <div class="cand-head">
+        <span class="cand-id">B27</span>
+        <span class="cand-rank">[Rank 1 · cleanest evidence]</span>
+      </div>
+      <p class="cand-sub" style="margin-bottom:12px">[coordinates / description / defining characteristics]</p>
+      <div class="metrics">
+        <div><span class="k">[Metric one]</span><span class="v">3.10 s</span></div>
+        <div><span class="k">[Metric two]</span><span class="v good">−6.42 %</span></div>
+        <div><span class="k">[Contamination]</span><span class="v bad">0% / 36.7%</span></div>
+      </div>
+      <div class="cand-grid">
+        <figure class="photo">
+          <img src="../../output/[dir]/[a.png]" alt="[alt text]">
+          <figcaption>[source and resolution]</figcaption>
+        </figure>
+        <figure class="photo">
+          <img src="../../output/[dir]/[b.png]" alt="[alt text]">
+          <figcaption>[how to read this image]</figcaption>
+        </figure>
+      </div>
+      <div class="verdict">
+        <b>[Why it ranks first]</b>
+        <p style="margin-bottom:0">[the reason for the ranking, stated so it can be overturned]</p>
+      </div>
+      <div class="checkq">
+        <b>[Please confirm]</b>
+        <p>[one concrete question a human can answer by looking]</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="decide">
+    <div class="sec-head"><span class="sec-num">09</span><h2>[Your decisions]</h2></div>
+    <p class="sec-goal">[What the first few affect, what the rest affect]</p>
+
+    <div class="decide">
+      <div class="dn">[Decision 1] · [blast radius]</div>
+      <h4>[The question, phrased as a question]</h4>
+      <p>[Why this is a problem, and what each option costs]</p>
+      <div class="rec"><b>[My recommendation:]</b> [recommendation + reasoning]</div>
+    </div>
+  </section>
+
+  <footer>
+    [Data:] [source] · [script] <code>scripts/[path].py</code> · [outputs] <code>output/[dir]/</code>
+    <br>2026-XX-XX · [images are linked by relative path and must travel with the repo (emailing the HTML alone breaks them)]
+  </footer>
+
+</div>
+
+<button id="themeToggle" type="button" aria-label="[Toggle light / dark theme]">[Toggle theme]</button>
+<script>
+  (function () {
+    var THEME_KEY = "[replace with a key unique to this document]";
+    var root = document.documentElement;
+    var saved = null;
+    try { saved = localStorage.getItem(THEME_KEY); } catch (e) {}
+    if (saved) { root.setAttribute("data-theme", saved); }
+    document.getElementById("themeToggle").addEventListener("click", function () {
+      var cur = root.getAttribute("data-theme");
+      if (!cur) { cur = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; }
+      var next = cur === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>
