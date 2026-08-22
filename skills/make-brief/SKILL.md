@@ -454,6 +454,10 @@ listed below.
 
 ## I. Pre-delivery checklist
 
+- [ ] **The `<title>` has been replaced.** It lives in `<head>`, so nothing on the page itself
+      reveals that it is still the placeholder - check the browser tab, not the page. Grep the
+      finished file for `[`; anything still bracketed was missed, and the title is the one that
+      gets missed.
 - [ ] **If updating an existing page: confirm it was rewritten, not appended to** (B-2). No section
       exists only as "outdated but kept for contrast".
 - [ ] The first section is about "why", not "results".
