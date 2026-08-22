@@ -60,6 +60,14 @@ That page ships with the repo as `examples/demo-brief.html` — open it locally 
 - **A sentence-level pass** for buried verbs, unresolvable pronouns, comparatives with no baseline, and ungrounded abstract nouns.
 - **The page is never the delivery.** The claim, the evidence, and the decision still get written in the conversation; the HTML is the layer to descend into.
 
+## When not to use this
+
+- **Three paragraphs in the conversation would cover it.** Then write the three paragraphs. A page that exists to look thorough costs the reader more than it gives them.
+- **The material is going to be presented out loud.** Build slides.
+- **The output is a durable conclusion for agents or future sessions to read.** A plain `docs/reports/*.md` is enough; it does not need layout.
+- **The point is comparing magnitudes and nothing else.** That is a table. The skill will tell you to draw fewer diagrams, not more.
+- **You want a URL you can send to someone outside your repository.** That is what the built-in artifact is for, and it does it well. This plugin exists for the case where the page belongs next to the code, not on the web.
+
 ## Files
 
 ```
