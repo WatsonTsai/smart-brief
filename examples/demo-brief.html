@@ -93,12 +93,13 @@
   nav.toc a:hover, nav.toc a:focus-visible { color: var(--ink); background: var(--surface-2); }
 
   section { margin-bottom: 72px; scroll-margin-top: 60px; }
-  .sec-head { border-top: 2px solid var(--ink); padding-top: 14px; margin-bottom: 6px;
+  .sec-head { border-top: 2px solid var(--ink); padding-top: 14px; margin-bottom: 0;
               display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
   .sec-num { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: .08em; }
   h2 { font-family: var(--display); font-size: clamp(21px, 2.6vw, 28px); font-weight: 700;
        letter-spacing: -0.018em; line-height: 1.25; }
-  .sec-goal { color: var(--muted); font-size: 15px; font-style: italic; margin: 10px 0 26px; max-width: 70ch; }
+  .lede { color: var(--ink); font-size: 17.5px; line-height: 1.7; margin: 18px 0 20px; max-width: 70ch; }
+  h2 .h2-en { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--muted); margin-left: 8px; }
   h3 { font-family: var(--display); font-size: 18.5px; font-weight: 650; margin: 32px 0 11px; letter-spacing: -0.012em; }
   h4 { font-family: var(--display); font-size: 15.5px; font-weight: 650; margin-bottom: 6px; }
   p { margin-bottom: 15px; max-width: 70ch; }
@@ -263,9 +264,9 @@
 <header class="mast">
   <div class="wrap">
     <div class="eyebrow">Sample page · CI platform decision · 2026-08-20</div>
-    <h1>Eight tenths of the CI wait happens before a build step runs.</h1>
+    <h1>Where the CI wait actually goes</h1>
     <p class="standfirst">
-      Read it top to bottom. Sections 00 to 04 build the argument, section 05 ranks the three lanes,
+      This page works out where the wait between opening a pull request and seeing it turn green actually goes, and asks for three decisions that follow from the answer. Read it top to bottom. Sections 00 to 04 build the argument, section 05 ranks the three lanes,
       section 06 says what the sample cannot cover, and section 07 is the part that needs a human answer.
       No other file is required first.
     </p>
@@ -284,9 +285,9 @@
   <ul>
     <li><a href="#s0">00 Summary</a></li>
     <li><a href="#s1">01 Two waits</a></li>
-    <li><a href="#s2">02 How it was measured</a></li>
+    <li><a href="#s2">02 Measurement</a></li>
     <li><a href="#s3">03 A correction</a></li>
-    <li><a href="#s4">04 The mix problem</a></li>
+    <li><a href="#s4">04 Job mix</a></li>
     <li><a href="#s5">05 The three lanes</a></li>
     <li><a href="#s6">06 What is not covered</a></li>
     <li><a href="#s7">07 Your decisions</a></li>
@@ -296,8 +297,8 @@
 <div class="wrap">
 
   <section id="s0">
-    <div class="sec-head"><span class="sec-num">00</span><h2>The queue, not the build, is where the time goes.</h2></div>
-    <p class="sec-goal">This section explains: the whole argument in five sentences, for a reader who stops here.</p>
+    <div class="sec-head"><span class="sec-num">00</span><h2>Summary</h2></div>
+    <p class="lede">One number gets quoted in every planning conversation on this team: a pull request turns green about 25 minutes after it opens, and that figure has roughly doubled since the start of the quarter. Nobody can act on it, because two different problems are hiding inside it and they have opposite fixes. Everything below is an attempt to pull them apart.</p>
 
     <div class="key">
       <div class="kt">One-minute version</div>
@@ -310,8 +311,8 @@
   </section>
 
   <section id="s1">
-    <div class="sec-head"><span class="sec-num">01</span><h2>Waiting for CI is two waits stacked, and each one has the opposite cure.</h2></div>
-    <p class="sec-goal">This section explains: why a single "CI is slow" number cannot be acted on, and what the two parts of it are.</p>
+    <div class="sec-head"><span class="sec-num">01</span><h2>Two waits</h2></div>
+    <p class="lede">A developer opens a pull request and watches a status check until it goes green. That gap is the only thing anyone actually experiences, and it is the number that ends up in planning conversations. The trouble starts the moment someone tries to shorten it, because the gap is not one thing and the two things inside it do not respond to the same treatment.</p>
 
     <p>
       A developer opens a pull request and watches a status check. Some minutes later the check turns green.
@@ -393,8 +394,8 @@
   </section>
 
   <section id="s2">
-    <div class="sec-head"><span class="sec-num">02</span><h2>Separating the two waits needed three timestamps per job, not one stopwatch.</h2></div>
-    <p class="sec-goal">This section explains: what was recorded, how the two intervals were derived from it, and what the sample covers.</p>
+    <div class="sec-head"><span class="sec-num">02</span><h2>Measurement</h2></div>
+    <p class="lede">Shortening the felt wait means knowing which of the two intervals dominates it, and the obvious place to look is the duration shown next to each check on the pull request page. That number is exactly where the first version of this analysis went wrong: it starts counting earlier than almost everyone assumes it does.</p>
 
     <p>
       The duration shown next to a check on the pull request page starts counting when the job is created, which is
@@ -513,8 +514,8 @@
   </section>
 
   <section id="s3">
-    <div class="sec-head"><span class="sec-num">03</span><h2>The first reading blamed the build steps, and re-measuring moved four fifths of the wait into the queue.</h2></div>
-    <p class="sec-goal">This section explains: which earlier conclusion is withdrawn, why it was wrong, and which of the numbers are safe to repeat out loud.</p>
+    <div class="sec-head"><span class="sec-num">03</span><h2>A correction</h2></div>
+    <p class="lede">An earlier version of this analysis reached the opposite conclusion and recommended sharding the test suite three ways. That recommendation was circulated before the timestamps in section 02 existed, and some people have already acted on it. It is withdrawn here, together with the reason it looked convincing at the time.</p>
 
     <div class="key danger">
       <div class="kt">Correction</div>
@@ -561,8 +562,8 @@
   </section>
 
   <section id="s4">
-    <div class="sec-head"><span class="sec-num">04</span><h2>The comparison that made rented machines look faster was comparing two different sets of jobs.</h2></div>
-    <p class="sec-goal">This section explains: how a difference in job mix produced a ranking, and what that ranking becomes once the mix is held fixed.</p>
+    <div class="sec-head"><span class="sec-num">04</span><h2>Job mix</h2></div>
+    <p class="lede">During the second week, part of the traffic was routed to rented machines as a trial. Pooled across everything that ran, the rented machines came out clearly ahead, and that comparison is the one most likely to be quoted back at you in the meeting. It has to be taken apart before the ranking in the next section means anything.</p>
 
     <p>
       A trial in the second week sent part of the traffic to managed runners. Pooled across everything that ran, a job
@@ -635,8 +636,8 @@
   </section>
 
   <section id="s5">
-    <div class="sec-head"><span class="sec-num">05</span><h2>On like-for-like numbers the split lane ranks first, and the reason it ranks first can be checked.</h2></div>
-    <p class="sec-goal">This section explains: the three options, the number each ranking turns on, and the observation that would overturn it.</p>
+    <div class="sec-head"><span class="sec-num">05</span><h2>The three lanes</h2></div>
+    <p class="lede">With the two waits separated and the confounded comparison set aside, three options are left on the table. They are not close to each other on cost, and each one turns on a different number - including one number that has never actually been observed.</p>
 
     <p>
       Every felt-wait figure in these three cards is modelled from the arrival counts in the sample, not observed after a
@@ -723,8 +724,8 @@
   </section>
 
   <section id="s6">
-    <div class="sec-head"><span class="sec-num">06</span><h2>Three weeks of weekdays leaves three gaps, and each one changes a specific choice.</h2></div>
-    <p class="sec-goal">This section explains: what the sample cannot support, and which follow-up closes each gap.</p>
+    <div class="sec-head"><span class="sec-num">06</span><h2>What is not covered</h2></div>
+    <p class="lede">Every figure above comes from three weeks of weekdays in a single repository. That sample is enough to separate the two waits, which was the point of the exercise. It is not enough to settle everything the ranking implies, and the gaps are not evenly distributed: each one blocks one specific decision below.</p>
 
     <div class="agenda">
       <div class="item">
@@ -765,8 +766,8 @@
   </section>
 
   <section id="s7">
-    <div class="sec-head"><span class="sec-num">07</span><h2>Three answers are needed, and the first one blocks the other two.</h2></div>
-    <p class="sec-goal">Decision 1 sets the direction for every repository; decisions 2 and 3 only affect spending and what gets said in public.</p>
+    <div class="sec-head"><span class="sec-num">07</span><h2>Your decisions</h2></div>
+    <p class="lede">The three questions below are ordered by what they block, not by what they cost. The first one has to be answered before the other two mean anything, because it decides which lane every subsequent number is being compared against.</p>
 
     <div class="decide">
       <div class="dn">Decision 1 &#183; affects every repository</div>

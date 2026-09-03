@@ -34,7 +34,7 @@ The `python` note above applies here too, in the snippet's `command` field.
 
 ## What comes out
 
-![The top of a decision brief: an assertion as the headline, a standfirst saying how to read the page, a warning box, and a plain-language table of contents.](docs/demo-brief.png)
+![The top of a brief: the headline names the subject, the standfirst says what was built and how to read the page, a warning box marks the sample as invented, and the table of contents is a list of short topics.](docs/demo-brief.png)
 
 Diagrams are inline SVG drawn from CSS variables, so they recolor in dark mode, and the caption states the consequence rather than naming the picture:
 
@@ -53,7 +53,8 @@ That page ships with the repo as `examples/demo-brief.html` — open it locally 
 ## What the skill enforces
 
 - **Motivation first.** Every prerequisite the reader is missing becomes an earlier section. The 30-second self-check is run on the outline, not on the finished draft.
-- **Headings are assertions.** "Five checks overturned two of the numbers", not "Verification results". Each section opens with one italic line saying what it explains.
+- **Headings are terms, and the argument lives in the paragraph.** "Queue time", not "Separating the two waits needed three timestamps per job". A table of contents made of full sentences has to be read before it can be used, which defeats the point of a table of contents. Each section then opens with background — where the problem came from — before any definition, and closes with a one-line takeaway.
+- **Terms are defined before they are used.** A bundled scan (`check_forward_refs.py`) lists every term by where it first appears, because a writer re-reading their own page cannot see this: you already know what the words mean. A term in a heading does not count as defined.
 - **Diagrams answer a specific "why".** Inline SVG only, every fill and stroke from a CSS variable so dark mode recolors, arrows hand-drawn as `line` + `polygon`, and a caption that states the consequence rather than describing the picture.
 - **Honesty has a fixed shape.** A self-correction carries all three parts: what was originally said, why it was wrong, what to believe now. Numbers are marked as measured, inferred, or not quotable. Any metric used for ranking gets a confounder check first. Every decision item carries a recommendation and its reasoning.
 - **Updates are rewrites.** Patching an existing page a third time turns its section order into a history of the author's mistakes. The skill makes you rewrite and keep the superseded file with a banner instead.

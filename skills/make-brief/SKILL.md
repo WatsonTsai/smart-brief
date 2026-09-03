@@ -1,6 +1,6 @@
 ---
 name: make-brief
-description: Produce a local HTML page a human can actually read and decide from - either a narrative decision brief or an item-by-item technical review page. Triggers when the user says "write this up as an HTML page for me", "I don't follow, give me the full context", "make me a decision page / review page", "pull the last few days into one document", "brief me on this properly", or "/make-brief". The core moves are: establish motivation before results, explain causal chains with inline SVG, and mark self-corrections and evidence strength honestly.
+description: Produce a local HTML page a human can actually read and decide from - a narrative decision brief, an item-by-item technical review page, or a mechanism explainer that walks through a system and its terminology. Triggers when the user says "write this up as an HTML page for me", "I don't follow, give me the full context", "make me a decision page / review page", "pull the last few days into one document", "brief me on this properly", or "/make-brief". The core moves are: establish motivation before results, explain causal chains with inline SVG, and mark self-corrections and evidence strength honestly.
 ---
 
 # make-brief - HTML pages built to be understood and decided on
@@ -33,9 +33,10 @@ Write the page in the language the reader will read it in - which in practice me
 user has been talking to you in. A page that follows every structural rule here and is written in a
 language its reader has to translate has failed at the one thing the skill exists for.
 
-The examples are here to show the **shape** of a sentence, not to supply its words. "Five checks
-overturned two of the numbers" is demonstrating that an h2 makes an assertion and names a magnitude.
-Reproduce that shape in the target language; do not carry the English across.
+The examples are here to show the **shape** of a sentence, not to supply its words. "Queue time" as
+an h2 is demonstrating that a heading names the thing under discussion and stops there; the opening
+paragraph beneath it is demonstrating that the argument starts from where the problem came from.
+Reproduce those shapes in the target language; do not carry the English across.
 
 Three things get missed in that order, every time the output is not English:
 
@@ -143,12 +144,17 @@ How to do it:
 
 ## C. Pick the document type (and decide whether to split)
 
-| | **Narrative decision brief** | **Item-by-item technical review** |
-|---|---|---|
-| How it is read | Once, start to finish | Jumped around, item by item |
-| Section logic | Chronological or causal | Principles up front, then one card per item |
-| Decision format | "What you need to decide" at the end, each item with my recommendation | Each item carries a specific "please confirm" question |
-| Diagrams | Few, only at the load-bearing causal steps | Many, schematic paired with the actual artifact |
+| | **Narrative decision brief** | **Item-by-item technical review** | **Mechanism explainer** |
+|---|---|---|---|
+| Purpose | Get one decision made | Get a list confirmed | Get a system understood |
+| How it is read | Once, start to finish | Jumped around, item by item | Once through, then kept as a manual |
+| Section logic | Chronological or causal | Principles up front, then one card per item | System overview first, then one term per section |
+| Decision format | "What you need to decide" at the end, each item with my recommendation | Each item carries a specific "please confirm" question | **No decision section.** It ends with a lookup table and an evidence-strength table |
+| Diagrams | Few, only at the load-bearing causal steps | Many, schematic paired with the actual artifact | One per mechanism that is hard to picture |
+
+**When to write a mechanism explainer:** the reader has to understand a system that was just built,
+or a batch of terms they have never met, and they will come back to the page later. The trigger is
+"explain this to me" or "draw me a system diagram", not "help me decide".
 
 **When to split into two pages:** would the prerequisite knowledge for one sub-topic blow up the
 section count of the main document and drown the decision itself? If yes, split. In the case this
@@ -195,16 +201,75 @@ TLDR       "one-minute version" keybox: motivation -> method -> what is missing 
 footer
 ```
 
+### D-3. Mechanism explainer
+
+```
+masthead    eyebrow / h1 /
+            standfirst: the first sentence says WHAT WAS BUILT; only the second says how to read
+                        the page. If you inferred the reader's starting level, say so here in one
+                        line, with the evidence, so they can correct you.
+TLDR        three-paragraph keybox labelled "what this is / how it was built / the thing that
+            matters most" - not "motivation / method / result", which only reads well to someone
+            who already knows what the subject is
+Terms box   keybox: the three to six words that run through the whole page, defined together.
+            Only the framing terms that block reading; per-section jargon stays in its section.
+01..03      the system itself: overview diagram, what is shared with what, order of operations
+04..0N      one term per section. The h2 is the term (optionally + .h2-en for the technical name).
+            Four beats per section: background (where this problem came from) -> what it is ->
+            how it works -> why it was designed this way. Close with one line: "remember this about X".
+N-1         lookup table: every term on one screen, with a judgement column
+            (for example "does it make a noise when it breaks?")
+N           evidence strength: mark each claim measured / indirect evidence only / not verified
+footer
+```
+
+**This type has no decision section.** The reader wants to understand, not to sign off. Forcing a
+decision section on it produces a half-hearted brief instead of a usable manual.
+
 ### Fixed fields for every section
 
-- **The h2 is an assertion, not a topic label.**
-  Good: "Five checks overturned two of the numbers." / "Why the mechanism has to be a hard surface."
-  Bad: "Verification results" / "Candidate analysis"
-- **One italic line under the h2** (`.sec-goal`): "This section explains: ...". Scanning
-  that one line tells the reader whether to read the section closely.
-- **Explain a term in plain language the first time it appears, in place.** No glossary. Mark it with
-  `.term` (dotted underline). If the reader has to retain a term, give it its own keybox: "remember
-  these two words, they run through the rest of the page."
+- **The h2 is a term or a short topic, never a full sentence.**
+  Good: "Queue time" / "Job mix" / "Measurement method" / "The three lanes"
+  Bad: "Separating the two waits needed three timestamps per job, not one stopwatch."
+
+  This reverses an earlier version of this skill, which required assertion headings. The reason for
+  the reversal: a reader who has both versions in front of them cannot scan the assertion one. A
+  table of contents made of six full sentences has to be *read*, and by the time you have read it
+  you have lost the thing you opened the TOC to find. **A heading's job is to make a section
+  findable, not to win the argument.** The argument moves into the opening paragraph, where it has
+  room to be made properly.
+
+  Optionally follow the term with a smaller original-language or technical name using `.h2-en`,
+  for example `Junction` followed by `NTFS reparse point`.
+- **The first paragraph of a section is background, not the conclusion** (`.lede`, a slightly larger
+  opening paragraph - there is no separate italic subtitle line any more).
+  State where the problem came from before you define anything. The reader needs to know why this
+  thing exists in their system before a definition means anything to them.
+  - Bad: "A junction is a note holding another path, so two tools can share one directory."
+    (opens with the definition and the conclusion at once)
+  - Good: "Your skills live in directory A. The second tool only reads directory B. Copying them
+    across means the two drift apart. To make both tools genuinely read *one* copy, something has
+    to make B point at A - and on Windows that something is called a junction."
+  - The test: after the first paragraph the reader should be asking **"so what is it?"**, not
+    "so what?".
+  - The conclusion moves to the end of the section. In a mechanism explainer make it an explicit
+    one-liner ("remember this about X"); in a decision brief it is usually the closing sentence of
+    the last paragraph, which reads less mechanically.
+- **Explain a term in plain language the first time it appears, in place.** No glossary at the end.
+  Mark it with `.term` (dotted underline).
+  **Terms that run through the whole page (three to six of them) get one keybox near the top** -
+  do not scatter them. Terms used in only one section stay in that section.
+- **Name a term before you use a pronoun for it.** Writing "it" or "this mechanism" for something
+  the running text has not named yet forces the reader to stop and reconstruct the referent.
+  - Bad: "Failures are silent. You might assume that is a bug, but it is a deliberate design choice."
+    (the "it" means fail-open, and the paragraph never says fail-open)
+  - Good: "Failures are silent. This behaviour has a name - fail-open. You might assume fail-open is
+    a bug, but it is a deliberate design choice."
+  - **A term appearing in the h2 does not count as naming it.** The reader is following the prose.
+- **Run the forward-reference scan before delivering** (see `check_forward_refs.py` in this skill's
+  directory). It extracts the plain text, finds where each term first appears, and lists them in
+  order so you can check that the definition comes first. Writers cannot catch this by re-reading -
+  you already know what the words mean, so your eye skips over them.
 - **Quote other people verbatim** (`.quote` + `<cite>`), never paraphrase. In a decision document,
   the precision of "what the other party actually said" is the credibility of the document.
 - **Sentence-level writing follows section G.** This section governs the skeleton; whether a single
@@ -461,8 +526,16 @@ listed below.
 - [ ] **If updating an existing page: confirm it was rewritten, not appended to** (B-2). No section
       exists only as "outdated but kept for contrast".
 - [ ] The first section is about "why", not "results".
-- [ ] Every section has its one-line `.sec-goal`.
-- [ ] The h1 and every h2 is an assertion.
+- [ ] **Every h2 is a term or a short topic, never a full sentence.** Read the TOC on its own: can
+      you tell at a glance what each section covers, without reading whole sentences?
+- [ ] **Every section opens with background** (`.lede`) - where the problem came from, not the
+      definition and not the conclusion.
+- [ ] **The standfirst's first sentence says what was built or what this is**, not how to read the page.
+- [ ] **Ran the forward-reference scan** (`check_forward_refs.py`): every term is defined in the
+      running text before it is used. A term in an h2 does not count as defined.
+- [ ] **After changing the structure, grep for descriptions of the old structure.** Removing the
+      italic subtitle line while leaving "the grey line under each heading is the takeaway" in the
+      standfirst leaves the page lying about itself.
 - [ ] Ran the sentence-level pass from section G: buried actions, unresolvable references, missing
       comparison baselines, ungrounded abstractions, announcement sentences.
 - [ ] Every term is explained in place the first time it appears.
@@ -485,3 +558,9 @@ listed below.
 - `starter.html` - the full skeleton (tokens, reset, both themes, toggle, all components). Copy and
   use.
 - `svg_patterns.md` - four reusable schematic patterns plus the color-meaning table.
+- `check_forward_refs.py` - the forward-reference scan. Run it before delivering:
+
+      python check_forward_refs.py your-page.html
+
+  It lists every term by where it first appears, so you can confirm the definition comes first.
+  The script finds the positions; deciding whether a spot counts as an explanation is still yours.

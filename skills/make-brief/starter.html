@@ -110,12 +110,13 @@
   nav.toc a:hover, nav.toc a:focus-visible { color: var(--ink); background: var(--surface-2); }
 
   section { margin-bottom: 72px; scroll-margin-top: 60px; }
-  .sec-head { border-top: 2px solid var(--ink); padding-top: 14px; margin-bottom: 6px;
+  .sec-head { border-top: 2px solid var(--ink); padding-top: 14px; margin-bottom: 0;
               display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
   .sec-num { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: .08em; }
   h2 { font-family: var(--display); font-size: clamp(21px, 2.6vw, 28px); font-weight: 700;
        letter-spacing: -0.018em; line-height: 1.25; }
-  .sec-goal { color: var(--muted); font-size: 15px; font-style: italic; margin: 10px 0 26px; max-width: 70ch; }
+  .lede { color: var(--ink); font-size: 17.5px; line-height: 1.7; margin: 18px 0 20px; max-width: 70ch; }
+  h2 .h2-en { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--muted); margin-left: 8px; }
   h3 { font-family: var(--display); font-size: 18.5px; font-weight: 650; margin: 32px 0 11px; letter-spacing: -0.012em; }
   h4 { font-family: var(--display); font-size: 15.5px; font-weight: 650; margin-bottom: 6px; }
   p { margin-bottom: 15px; max-width: 70ch; }
@@ -310,8 +311,8 @@
   </section>
 
   <section id="s1">
-    <div class="sec-head"><span class="sec-num">01</span><h2>[Heading as an assertion, not a noun]</h2></div>
-    <p class="sec-goal">[This section explains:] [one sentence].</p>
+    <div class="sec-head"><span class="sec-num">01</span><h2>[A term or short topic - never a full sentence]<span class="h2-en">[optional technical name]</span></h2></div>
+    <p class="lede">[Background: where this problem came from. Not the definition, not the conclusion.]</p>
 
     <p>[Body text. The first time a term appears, mark it with] <span class="term">[term]</span> [and explain it in plain words right there.]</p>
 
@@ -345,7 +346,7 @@
 
   <section id="s2">
     <div class="sec-head"><span class="sec-num">02</span><h2>[Item-by-item review, demo]</h2></div>
-    <p class="sec-goal">[This section explains:] [one sentence].</p>
+    <p class="lede">[Background: where this problem came from. Not the definition, not the conclusion.]</p>
 
     <div class="cand best">
       <div class="cand-head">
@@ -381,7 +382,7 @@
 
   <section id="decide">
     <div class="sec-head"><span class="sec-num">09</span><h2>[Your decisions]</h2></div>
-    <p class="sec-goal">[What the first few affect, what the rest affect]</p>
+    <p class="lede">[What the first few affect, what the rest affect]</p>
 
     <div class="decide">
       <div class="dn">[Decision 1] · [blast radius]</div>
