@@ -1,0 +1,31 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile Python files
+        run: python -m py_compile hooks/block-artifact.py skills/make-brief/check_forward_refs.py
+      - name: Validate JSON files
+        run: |
+          python -c "
+          import json, sys
+          files = [
+              '.claude-plugin/marketplace.json',
+              '.claude-plugin/plugin.json',
+              'examples/settings.snippet.unix.json',
+              'examples/settings.snippet.windows.json',
+              'hooks/hooks.json',
+          ]
+          for f in files:
+              json.load(open(f, encoding='utf-8'))
+              print('OK', f)
+          "
