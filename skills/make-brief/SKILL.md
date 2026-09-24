@@ -88,7 +88,7 @@ Three things get missed in that order, every time the output is not English:
 
 ---
 
-## B. Three questions to answer before writing a single word
+## B. Four questions to answer before writing a single word
 
 1. **Who is the reader?** Usually the person who asked, and they are the person who has to make the
    call. They know their own material and do not know the things you looked up in the last few days.
@@ -99,6 +99,19 @@ Three things get missed in that order, every time the output is not English:
 3. **What prerequisite knowledge are they missing right now?** List the gaps one by one.
    **Every missing prerequisite becomes an earlier section.** That is the single reason the failed
    first version failed.
+4. **Is the reader starting from zero on this topic, or do they already have a base?**
+   **Do not ask them. Look.** The reader's own material usually answers it: their existing
+   projects and repositories on this subject (written by them, not scaffolded for them today), their
+   notes or wiki, any experience they have written down, any conventions they have codified, and
+   their git history in this area. If most of those are empty, write for a starter: keep the
+   foundation sections, define every term where it first appears, one mechanism per section. If
+   most of them have substance, skip the foundations and go straight to the detail - do not spend
+   the reader's time explaining what they know better than you do.
+
+   **State the inference in one line of the standfirst**, for example "This page assumes you are
+   new to X (basis: no notes on it in your wiki)." The inference will sometimes be wrong - people
+   know things they never wrote down. Saying it out loud costs nothing and lets the reader correct
+   it at a glance; asking costs them a round of attention every single time.
 
 ### The 30-second self-check (run it on the outline, not on the finished draft)
 
